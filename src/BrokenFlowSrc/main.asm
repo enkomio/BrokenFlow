@@ -15,7 +15,7 @@ VirtualAlloc proto lpAddress:ptr void, dwSize:ptr void, flAllocationType:dword, 
 .code
 
 @shellcode:
-; this is my super crazy shellcode. It is WORD xor "encrypted" with key: 0ffe6h
+; this is my super crazy shellcode. It is WORD xor "encrypted" with key: 06799h
 db 009h, 0f7h, 009h, 0f7h, 05ah, 0f7h
 shellcode_size equ $ - @shellcode
 
