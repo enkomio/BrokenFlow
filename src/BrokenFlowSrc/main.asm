@@ -1,6 +1,6 @@
 comment!
 A simple PoC that implements a self-modifying code that calls an encrypted shellcode.
-Compare to a plain jump to the decrypted shellcode, this PoC does not explocitly contains
+Compared to a plain jump to the decrypted shellcode, this PoC does not explocitly contains
 the "jmp shellcode" instruction, ideally hiding the real execution flow.
 
 2022 (C) Antonio 's4tan' Parata
