@@ -41,7 +41,6 @@ main proc
 	; save reminder
 	push edx
 
-	mov ecx, edx
 	add edx, shellcode_size + decryption_size
 	invoke VirtualAlloc, 0h, edx, MEM_COMMIT, PAGE_EXECUTE_READWRITE
 
