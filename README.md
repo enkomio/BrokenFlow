@@ -50,6 +50,10 @@ As you can see, **the decryption loop does not contain any instruction that jump
     
 in this case, the decryption key **must be 06799h**, since the XOR operation between 8166h (the first two bytes of the first instruction of the decryption loop) and 6799h (the XOR key) is e6ffh which is assembled to **jmp esi**. By setting the ESI register to the start of our shellcode, we can achieve execution :)
 
+Below an example of debugging. Initially the encrypted shellcode is copied, following by the code used to decrypt and call it. You can noticed that after the third execution of the decryption loop the instruction **xor word ptr ds:[eax],6799** changes to **jmp esi**.
+
+![BrokenFlow execution](BrokenFlow.gif "BrokenFlow execution")
+
 # Usage
 The steps to use this techniques are:
 * Encrypt your shellcode with the XOR key 0x6799. The encryption loop iteration must have a WORD size step (2-bytes);
