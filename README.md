@@ -55,7 +55,7 @@ Below an example of debugging. Initially the encrypted shellcode is copied, foll
 ![BrokenFlow execution](BrokenFlow.gif "BrokenFlow execution")
 
 # Usage
-The steps to use this techniques are:
+The steps to use this technique are:
 * Encrypt your shellcode with the XOR key 0x6799. The encryption loop iteration must have a WORD size step (2-bytes);
 * Create the memory layout as reported in Figure 1. The encrypted shellcode size must be a multiple of two;
 * Set the register ECX to the size of the allocated memory;
