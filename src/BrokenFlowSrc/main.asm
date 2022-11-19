@@ -50,7 +50,7 @@ main proc
 	mov ecx, shellcode_size
 	rep movsb
 		
-	; add remined to have a multiple of 2
+	; add reminder to have a multiple of 2
 	pop edx
 	add edi, edx
 
