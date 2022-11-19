@@ -31,7 +31,7 @@ The memory layout to use this technique is the standard one and descrybed in Fig
 
 Figure1. Memory Layout
 
-The decryption loop will decrypt the shellcode and jump to it. All the "magic" is inside the decryption loop, since after finished decrypting the shellcode, the decryption loop will start to decrypt its own code. The decryption of the first instruct will result in a jump to our shellcode that is executed at the next loop iteration :)
+The decryption loop will decrypt the shellcode and jump to it. All the "magic" is inside the decryption loop, since after finished decrypting the shellcode, the decryption loop will start to decrypt its own code. The decryption of the first instruction will result in a jump to our shellcode that is executed at the next loop iteration :)
 
 Below the relevant part:
 
