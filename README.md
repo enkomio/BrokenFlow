@@ -55,7 +55,7 @@ Below an example of debugging. Initially the encrypted shellcode is copied, foll
 ![BrokenFlow execution](BrokenFlow.gif "BrokenFlow execution")
 
 ## Possible Improvements
-In order to make the decryption code less identifiable, it is possible to use alternative methods to call the shellcode. In order to have more freedon we can suppose to increase the chunck size that is encrypted during each iteration. In my PoC I used 2-bytes becasuse **jmp esi** needs two bytes, but we can use 4 or 8-bytes chunk size, allowing the operator to have more alternatives that fit in 4 or 8-bytes chunk.
+In order to make the decryption code less identifiable, it is possible to use alternative methods to call the shellcode. In order to have more freedon we can suppose to increase the chunk size that is encrypted during each iteration. In my PoC I used 2-bytes becasuse **jmp esi** needs two bytes, but we can use 4 or 8-bytes chunk size, allowing the operator to have more alternatives that fit in 4 or 8-bytes chunk. According to the chosen way to call the shellcode, the encryption constant will change as well.
 
 # Usage
 The steps to use this technique are:
