@@ -48,7 +48,11 @@ As you can see, **the decryption loop does not contain any instruction that jump
     49                       | dec ecx                                                      
     E2 F5                    | loop 450006
     
-in this case, the decryption key **must be 06799h**, since the XOR operation between 8166h (the first two bytes of the first instruction of the decryption loop) and 6799h (the XOR key) is e6ffh which is assembled to **jmp esi**. By setting the ESI register to the start of our shellcode, we can achieve execution :)
+in this case, the decryption key **must be 06799h**, since the XOR operation between 8166h (the first two bytes of the first instruction of the decryption loop) and 6799h (the XOR key) is e6ffh which is assembled to **jmp esi**. In other words:
+
+    0x8166 (xor word ptr ds:[eax],...) XOR 0x6799 (decryption key) == 0x6eff (jmp esi)
+
+By setting the ESI register to the start of our shellcode, we can achieve execution :)
 
 Below an example of debugging. Initially the encrypted shellcode is copied, followed by the code used to decrypt and call the shellcode. It is possible to notice that after the third execution of the decryption loop, the instruction **xor word ptr ds:[eax],6799** changes to **jmp esi**.
 
