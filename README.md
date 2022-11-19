@@ -31,7 +31,7 @@ The memory layout to use this technique is the standard one and descrybed in Fig
 
 Figure1. Memory Layout
 
-The decryption loop will decrypt the shellcode and jump to it. All the "magic" is inside the decryption loop, since after finished decrypting the shellcode, the decryption loop will start to decrypt its own code. The decryption of the first instruct will result in a jump to our shellcode that is executed at the next loop iteration :)
+The decryption loop will decrypt the shellcode and jump to it. All the "magic" is inside the decryption loop, since after finished decrypting the shellcode, the decryption loop will start to decrypt its own code. The decryption of the first instruction will result in a jump to our shellcode that is executed at the next loop iteration :)
 
 Below the relevant part:
 
@@ -48,11 +48,18 @@ As you can see, **the decryption loop does not contain any instruction that jump
     49                       | dec ecx                                                      
     E2 F5                    | loop 450006
     
-in this case, the decryption key **must be 06799h**, since the XOR operation between 8166h (the first two bytes of the first instruction of the decryption loop) and 6799h (the XOR key) is e6ffh which is assembled to **jmp esi**. By setting the ESI register to the start of our shellcode, we can achieve execution :)
+in this case, the decryption key **must be 06799h**, since the XOR operation between 8166h (the first two bytes of the first instruction of the decryption loop) and 6799h (the XOR key) is e6ffh which is assembled to **jmp esi**. In other words:
 
-Below an example of debugging. Initially the encrypted shellcode is copied, following by the code used to decrypt and call it. You can noticed that after the third execution of the decryption loop the instruction **xor word ptr ds:[eax],6799** changes to **jmp esi**.
+    0x8166 (xor word ptr ds:[eax],...) XOR 0x6799 (decryption key) == 0x6eff (jmp esi)
+
+By setting the ESI register to the start of our shellcode, we can achieve execution :)
+
+Below an example of debugging. Initially the encrypted shellcode is copied, followed by the code used to decrypt and call the shellcode. It is possible to notice that after the third execution of the decryption loop, the instruction **xor word ptr ds:[eax],6799** changes to **jmp esi**.
 
 ![BrokenFlow execution](BrokenFlow.gif "BrokenFlow execution")
+
+## Possible Improvements
+In order to make the decryption code less identifiable, it is possible to use alternative methods to call the shellcode. In order to have more freedom we can consider to increase the chunk size that is encrypted during each iteration. In my PoC I used 2-bytes becasuse **jmp esi** needs two bytes, but we can use 4 or 8-bytes chunk size, allowing the operator to have more alternatives that fit in 4 or 8-bytes chunk. According to the chosen way to call the shellcode, the encryption constant will change as well.
 
 # Usage
 The steps to use this technique are:
