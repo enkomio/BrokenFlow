@@ -1,6 +1,6 @@
 comment!
 A simple PoC that implements a self-modifying code that calls an encrypted shellcode.
-Compared to a plain jump to the decrypted shellcode, this PoC does not explocitly contains
+Compared to a plain jump to the decrypted shellcode, this PoC does not explicitly contains
 the "jmp shellcode" instruction, ideally hiding the real execution flow.
 
 2022 (C) Antonio 's4tan' Parata
@@ -50,7 +50,7 @@ main proc
 	mov ecx, shellcode_size
 	rep movsb
 		
-	; add remined to have a multiple of 2
+	; add reminder to have a multiple of 2
 	pop edx
 	add edi, edx
 
